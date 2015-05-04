@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表页</title>
+    <style>
+        *{
+            margin: 0;
+           // padding: 0;
+        }
+        .t1 {
+            background-color: gainsboro;
+        }
+    </style>
+    <script>
+        function page_next() {
+            url = '/travelList?travel_code=' + document.getElementById('travel_code').value + '&date=' + document.getElementById('date').value + '&' + 'page=' + '{{ next_page }}';
+            window.location.href = url;
+        }
+
+        function page_previous() {
+            url = '/travelList?travel_code=' + document.getElementById('travel_code').value + '&date=' + document.getElementById('date').value + '&' + 'page=' + '{{ previous_page }}';
+            window.location.href = url;
+        }
+        
+        function search(){
+            url = '/travelList?travel_code=' + document.getElementById('travel_code').value + '&date=' + document.getElementById('date').value;
+            console.log(url);
+            window.location.href = url;
+            
+        }
+    </script>
+</head>
+
+<body>
+        <a style='margin-left:80%' href="/logout">注销</a>
+        <h2 align='center'>旅游信息列表</h2>
+        <br/>
+    <div style='margin-left:auto;width:80%;'>
+        代码: <input type="text" value='{{ travel_code }}' id="travel_code"/>
+        日期: <input type="text" value='{{ date }}' id='date'/> *格式:2015-01-01 <input type="button" value="查找" onclick='search();'/>
+        <br/><br/>
+        
+        
+        <table border='1' cellpadding='0' cellspacing='0' style='text-align:center;align:center'>
+            <tr>
+                <th>代码</th>
+                <th>日期</th>
+                <th>成人价</th>
+                <th>儿童价</th>
+                <th>备注</th>
+            </tr>
+			{% for data in data_list %}
+			<tr class="{% cycle 't1' 't2' %}">
+                <td style='width:200px;'>{{ data.travel_code }}</td>
+                <td style='width:150px;'>{{ data.travel_date }}</td>
+                <td style='width:100px;'>{{ data.adult_price }}</td>
+                <td style='width:100px;'>{% if data.child_price %} {{ data.child_price }} {% endif %}
+                </td>
+                <td style='width:150px;'>{% if data.remark %} {{ data.remark }} {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        第{{ wanted_page }}页 / 共{{ total_pages }}页&nbsp;&nbsp;共{{ total_num }}条记录&nbsp;&nbsp; {% if page_up %}
+        <a href="javascript:;" onclick='page_previous();'>上一页</a>
+        {% else %}
+        <a>上一页</a>
+        {% endif %} {% if page_down %}
+        <a href="javascript:;" onclick='page_next();'>下一页</a>
+        {% else %}
+        <a>下一页</a>
+        {% endif %}
+        <input type="hidden" value='{{ page_next }}' id='page_next' />
+        <input type="hidden" value='{{ page_previous }}' id='page_previous' />
+    </div>
+</body>
+
+</html>

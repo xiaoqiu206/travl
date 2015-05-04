@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>注册/登录</title>
+    <script>
+        function login(){
+            document.form1.action = '/login';
+            document.form1.submit();
+        }
+        function register(){
+            document.form1.action = '/register';
+            document.form1.submit();
+        }
+    </script>
+</head>
+
+<body>
+    <div id='main' style='width: 20em;
+            min-width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            position: relative;'>
+        <form method='POST' action='' name='form1'>
+            用户名: <br/>
+            <input type="text" name='username' value=''>
+            <br/>
+            密 &nbsp; 码: <br/>
+            <input type="password" name='password' value=''>
+            <br/>
+            <br/>
+            <input type="button" value="注册" onclick='register();'>
+            <input type="button" value="登陆" onclick='login();'>
+            <p style='color:red;display:{{ display }};'>{{ error }}</p>
+            <br/>
+        </form>
+    </div>
+</body>
+
+</html>
